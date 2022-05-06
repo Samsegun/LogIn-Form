@@ -1,0 +1,175 @@
+.home-wrapper {
+    margin: 0 auto;
+    min-height: 100vh;
+    width: 80%;
+}
+
+.header {
+    color: rgb(242, 213, 163);
+    padding-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.user-status {
+    color: white;
+}
+
+.user-control {
+    display: inline;
+    font-size: 1.2rem;
+    width: 108px;
+    padding: 0.5rem 1rem;
+    background: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 27px;
+}
+
+.user-control:hover {
+    background: white;
+    color: rgb(184, 136, 52);
+}
+
+.user-control:not(.user-control:last-of-type) {
+    margin: 0 1rem;
+}
+
+.form-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-title {
+    position: absolute;
+    color: rgb(242, 213, 163);
+    font-size: 1.5rem;
+    font-family: cursive;
+    top: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.5;
+    text-transform: uppercase;
+    z-index: -1;
+}
+
+form {
+    width: 90%;
+    max-width: 1440px;
+    min-height: 500px;
+    color: white;
+    font-size: 2rem;
+    background: rgba(164, 164, 164, 0.3);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 9px rgb(16, 16, 16);
+}
+
+.mobile-form {
+    min-height: 400px;
+}
+
+.form-control:not(.form-control:first-of-type) {
+    margin: 1.5rem 0;
+}
+
+input {
+    font-size: 1rem;
+    width: 100%;
+    border-radius: 1rem;
+    outline: none;
+    border: none;
+}
+
+label, input {
+    display: block;
+    padding: 1rem;
+}
+
+label {
+    padding-top: 0;
+}
+
+label, button {
+    cursor: pointer;
+    display: block;
+    outline: none;
+    border: none;
+}
+
+.signUp {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    transition: all 300ms ease;
+}
+
+.signUp:hover, .signIn:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.signUp:active, .signIn:active {
+    transform: scale(0.9);
+}
+
+.signIn-text {
+    width: 80%;
+    margin: 1.5rem auto;
+    font-size: 1.2rem;
+}
+
+.signIn {
+    display: inline-block;
+    background: rgba(169, 117, 65, 0.7);
+    font-size: 1.3rem;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    color: white;
+    border-radius: 1rem;
+    transition: all 300ms ease;
+}
+
+.hide {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 300ms ease;
+}
+
+.show {
+    font-size: 1rem;
+    margin-bottom: 4px;
+    min-height: 40px;
+    padding: 0 10px;
+    color: rgb(249, 89, 89); 
+    background: white;
+    border-radius: 10px;
+    opacity: 1;
+    transition: all 300ms ease;
+}
+
+.warning-bg {
+    background: rgb(252, 129, 129);
+    color: white;
+    transition: all 300ms ease;
+}
+
+@media (min-width:767px) {
+    form {
+        width: 50%;
+    }
+    .show {
+        min-height: 20px;
+    }
+}
