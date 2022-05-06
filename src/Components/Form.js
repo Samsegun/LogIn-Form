@@ -8,7 +8,6 @@ const warningMessage = {
   emailInputWarning: false,
   passwordInputWarning: false,
 };
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "name":
@@ -22,38 +21,66 @@ const reducer = (state, action) => {
   }
 };
 
+// regex to validate email
+const validEmailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 const Form = () => {
   const [curState, dispatchFn] = useReducer(reducer, warningMessage);
   const [enteredName, setEnteredName] = useState("");
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
+
+  // refs
   const nameInputRef = useRef();
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   const submitHandler = e => {
     e.preventDefault();
 
-    console.log(enteredName);
+    // if(curState.nameInputWarning && curState.emailInputWarning && curState.passwordInputWarning) {
 
-    setEnteredName("");
+    // }
   };
 
   // name change handler
   const nameInputHandler = () => {
-    const enteredValue = nameInputRef.current.value;
+    const userNameInput = nameInputRef.current.value;
 
-    if (enteredValue.length <= 2) {
+    if (userNameInput.length <= 2) {
       dispatchFn({ type: "name", value: true });
     } else {
       dispatchFn({ type: "name", value: false });
     }
 
-    setEnteredName(enteredValue);
+    setEnteredName(userNameInput);
   };
 
   // email change handler
   const emailInputHandler = () => {
-    console.log("email");
+    const userEmailInput = emailInputRef.current.value;
 
-    const validRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (validEmailRegex.test(userEmailInput)) {
+      dispatchFn({ type: "email", value: false });
+    } else {
+      dispatchFn({ type: "email", value: true });
+    }
+
+    setEnteredEmail(userEmailInput);
+  };
+
+  // password change handler
+  const passwordChangeHandler = () => {
+    const userPasswordInput = passwordInputRef.current.value;
+
+    if (userPasswordInput.length <= 4) {
+      dispatchFn({ type: "password", value: true });
+    } else {
+      dispatchFn({ type: "password", value: false });
+    }
+
+    setEnteredPassword(userPasswordInput);
   };
 
   return (
@@ -85,24 +112,50 @@ const Form = () => {
           <label htmlFor="email">Email</label>
 
           {/* display warning message if user input is less than 3 characters */}
-          <p className={curState.nameInputWarning ? styles.show : styles.hide}>
-            <span>*Name must be at least 3 characters long</span>{" "}
+          <p className={curState.emailInputWarning ? styles.show : styles.hide}>
+            <span>*Please enter a valid email! </span>{" "}
           </p>
           <input
             type="email"
             id="email"
             placeholder="Enter Email"
+            className={curState.emailInputWarning ? styles["warning-bg"] : ""}
+            ref={emailInputRef}
             onChange={emailInputHandler}
+            value={enteredEmail}
           />
         </div>
 
+        {/* password field */}
         <div className={styles["form-control"]}>
           <label htmlFor="Password">Password</label>
-          <input type="password" id="Password" placeholder="Enter Password" />
+
+          {/* display warning message if user input is less than 5 characters */}
+          <p
+            className={
+              curState.passwordInputWarning ? styles.show : styles.hide
+            }
+          >
+            <span>*Password must contain at least 5 characters! </span>{" "}
+          </p>
+          <input
+            type="password"
+            id="Password"
+            placeholder="Enter Password"
+            className={
+              curState.passwordInputWarning ? styles["warning-bg"] : ""
+            }
+            onChange={passwordChangeHandler}
+            ref={passwordInputRef}
+            value={enteredPassword}
+          />
         </div>
 
+        {/* create account button */}
         <div>
-          <button className={styles.signUp}>Create Account</button>
+          <button className={styles.signUp} disabled={true}>
+            Create Account
+          </button>
         </div>
 
         <div>

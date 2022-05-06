@@ -73,6 +73,10 @@ form {
     box-shadow: 2px 2px 9px rgb(16, 16, 16);
 }
 
+form p {
+    font-size: 1rem;
+}
+
 .mobile-form {
     min-height: 400px;
 }
@@ -148,7 +152,6 @@ label, button {
 }
 
 .show {
-    font-size: 1rem;
     margin-bottom: 4px;
     min-height: 40px;
     padding: 0 10px;
@@ -160,7 +163,7 @@ label, button {
 }
 
 .warning-bg {
-    background: rgb(252, 129, 129);
+    background: rgb(250, 167, 167);
     color: white;
     transition: all 300ms ease;
 }
