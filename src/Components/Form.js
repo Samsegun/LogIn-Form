@@ -2,13 +2,13 @@ import { useState, useRef, useReducer } from "react";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
 
-// reducer
+// warning Message Reducer
 const warningMessage = {
   nameInputWarning: false,
   emailInputWarning: false,
   passwordInputWarning: false,
 };
-const reducer = (state, action) => {
+const warningMessageReducer = (state, action) => {
   switch (action.type) {
     case "name":
       return { ...state, nameInputWarning: action.value };
@@ -21,15 +21,38 @@ const reducer = (state, action) => {
   }
 };
 
-// regex to validate email
+// user input reducer
+const userInput = {
+  enteredName: "",
+  enteredEmail: "",
+  enteredPassword: "",
+};
+const userInputReducer = (state, action) => {
+  switch (action.type) {
+    case "userName":
+      return { ...state, enteredName: action.value };
+    case "userEmail":
+      return { ...state, enteredEmail: action.value };
+    case "userPassword":
+      return { ...state, enteredPassword: action.value };
+    default:
+      return;
+  }
+};
+
+// regex for validating email
 const validEmailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const Form = () => {
-  const [curState, dispatchFn] = useReducer(reducer, warningMessage);
-  const [enteredName, setEnteredName] = useState("");
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [curState, dispatchFn] = useReducer(
+    warningMessageReducer,
+    warningMessage
+  );
+  const [userInputState, dispatchInputFn] = useReducer(
+    userInputReducer,
+    userInput
+  );
 
   // refs
   const nameInputRef = useRef();
@@ -38,6 +61,7 @@ const Form = () => {
 
   const submitHandler = e => {
     e.preventDefault();
+    console.log("ehi");
 
     // if(curState.nameInputWarning && curState.emailInputWarning && curState.passwordInputWarning) {
 
@@ -54,7 +78,7 @@ const Form = () => {
       dispatchFn({ type: "name", value: false });
     }
 
-    setEnteredName(userNameInput);
+    dispatchInputFn({ type: "userName", value: userNameInput });
   };
 
   // email change handler
@@ -67,7 +91,7 @@ const Form = () => {
       dispatchFn({ type: "email", value: true });
     }
 
-    setEnteredEmail(userEmailInput);
+    dispatchInputFn({ type: "userEmail", value: userEmailInput });
   };
 
   // password change handler
@@ -80,7 +104,7 @@ const Form = () => {
       dispatchFn({ type: "password", value: false });
     }
 
-    setEnteredPassword(userPasswordInput);
+    dispatchInputFn({ type: "userPassword", value: userPasswordInput });
   };
 
   return (
@@ -103,7 +127,7 @@ const Form = () => {
             className={curState.nameInputWarning ? styles["warning-bg"] : ""}
             ref={nameInputRef}
             onChange={nameInputHandler}
-            value={enteredName}
+            value={userInputState.enteredName}
           />
         </div>
 
@@ -122,7 +146,7 @@ const Form = () => {
             className={curState.emailInputWarning ? styles["warning-bg"] : ""}
             ref={emailInputRef}
             onChange={emailInputHandler}
-            value={enteredEmail}
+            value={userInputState.enteredEmail}
           />
         </div>
 
@@ -147,7 +171,7 @@ const Form = () => {
             }
             onChange={passwordChangeHandler}
             ref={passwordInputRef}
-            value={enteredPassword}
+            value={userInputState.enteredPassword}
           />
         </div>
 
@@ -158,6 +182,7 @@ const Form = () => {
           </button>
         </div>
 
+        {/* sign in button */}
         <div>
           <p className={styles["signIn-text"]}>
             Already have an account?{" "}
