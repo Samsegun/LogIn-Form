@@ -1,6 +1,7 @@
 import { useState, useRef, useReducer } from "react";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
+import { useAuth } from "../Context/AuthContext";
 
 // warning Message Reducer
 const warningMessage = {
@@ -20,7 +21,6 @@ const warningMessageReducer = (state, action) => {
       return;
   }
 };
-
 // user input reducer
 const userInput = {
   enteredName: "",
@@ -53,19 +53,27 @@ const Form = () => {
     userInputReducer,
     userInput
   );
+  const [signUpButton, setSignUpButton] = useState(true);
 
   // refs
   const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
+  // firebase
+  const { signUp } = useAuth();
+
   const submitHandler = e => {
     e.preventDefault();
     console.log("ehi");
 
-    // if(curState.nameInputWarning && curState.emailInputWarning && curState.passwordInputWarning) {
-
-    // }
+    if (
+      curState.nameInputWarning &&
+      curState.emailInputWarning &&
+      curState.passwordInputWarning
+    ) {
+      setSignUpButton(false);
+    }
   };
 
   // name change handler
@@ -177,8 +185,8 @@ const Form = () => {
 
         {/* create account button */}
         <div>
-          <button className={styles.signUp} disabled={true}>
-            Create Account
+          <button className={styles.signUp} disabled={signUpButton}>
+            Sign Up
           </button>
         </div>
 
