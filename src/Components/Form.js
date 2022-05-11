@@ -60,6 +60,9 @@ const Form = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
+  // firebase
+  const { signUp, currentUser } = useAuth();
+
   // check if input fields are valid
   useEffect(() => {
     if (
@@ -83,12 +86,18 @@ const Form = () => {
     curState.passwordInputWarning,
   ]);
 
-  // firebase
-  const { signUp } = useAuth();
-
-  const submitHandler = e => {
+  const submitHandler = async e => {
     e.preventDefault();
-    console.log("ehi");
+
+    try {
+      setSignUpButton(true);
+      await signUp(userInputState.enteredEmail, userInputState.enteredPassword);
+    } catch (error) {
+      setSignUpButton(false);
+      alert("failed to create an account" + error);
+    }
+
+    setSignUpButton(false);
   };
 
   // name change handler
@@ -121,7 +130,7 @@ const Form = () => {
   const passwordChangeHandler = () => {
     const userPasswordInput = passwordInputRef.current.value;
 
-    if (userPasswordInput.length <= 4) {
+    if (userPasswordInput.length <= 5) {
       dispatchFn({ type: "password", value: true });
     } else {
       dispatchFn({ type: "password", value: false });
@@ -183,7 +192,7 @@ const Form = () => {
               curState.passwordInputWarning ? styles.show : styles.hide
             }
           >
-            <span>*Password must contain at least 5 characters! </span>{" "}
+            <span>*Password must contain at least 6 characters! </span>{" "}
           </p>
           <input
             type="password"
