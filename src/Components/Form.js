@@ -1,13 +1,13 @@
-import { useState, useRef, useReducer } from "react";
+import { useState, useRef, useReducer, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
 import { useAuth } from "../Context/AuthContext";
 
 // warning Message Reducer
 const warningMessage = {
-  nameInputWarning: false,
-  emailInputWarning: false,
-  passwordInputWarning: false,
+  nameInputWarning: null,
+  emailInputWarning: null,
+  passwordInputWarning: null,
 };
 const warningMessageReducer = (state, action) => {
   switch (action.type) {
@@ -60,27 +60,42 @@ const Form = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
+  // check if input fields are valid
+  useEffect(() => {
+    if (
+      // if all input fields have no warnings, use "and" operator
+      curState.nameInputWarning === false &&
+      curState.emailInputWarning === false &&
+      curState.passwordInputWarning === false
+    ) {
+      setSignUpButton(false);
+    } else if (
+      // if any input field has a warning, use "or" operator
+      curState.nameInputWarning === false ||
+      curState.emailInputWarning === false ||
+      curState.passwordInputWarning === false
+    ) {
+      setSignUpButton(true);
+    }
+  }, [
+    curState.nameInputWarning,
+    curState.emailInputWarning,
+    curState.passwordInputWarning,
+  ]);
+
   // firebase
   const { signUp } = useAuth();
 
   const submitHandler = e => {
     e.preventDefault();
     console.log("ehi");
-
-    if (
-      curState.nameInputWarning &&
-      curState.emailInputWarning &&
-      curState.passwordInputWarning
-    ) {
-      setSignUpButton(false);
-    }
   };
 
   // name change handler
   const nameInputHandler = () => {
     const userNameInput = nameInputRef.current.value;
 
-    if (userNameInput.length <= 2) {
+    if (userNameInput.trim().length <= 2) {
       dispatchFn({ type: "name", value: true });
     } else {
       dispatchFn({ type: "name", value: false });

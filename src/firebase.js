@@ -2,13 +2,13 @@
 // import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 import {
-  GoogleAuthProvider,
+  // GoogleAuthProvider,
   getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
+  // signInWithPopup,
+  // signInWithEmailAndPassword,
+  // createUserWithEmailAndPassword,
+  // sendPasswordResetEmail,
+  // signOut,
 } from "firebase/auth";
 
 // Your web app's Firebase configuration
