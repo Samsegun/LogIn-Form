@@ -1,5 +1,5 @@
 import { useState, useRef, useReducer, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../App.module.css";
 import { useAuth } from "../Context/AuthContext";
 
@@ -54,6 +54,7 @@ const Form = () => {
     userInput
   );
   const [signUpButton, setSignUpButton] = useState(true);
+  const history = useNavigate();
 
   // refs
   const nameInputRef = useRef();
@@ -86,18 +87,26 @@ const Form = () => {
     curState.passwordInputWarning,
   ]);
 
+  // form submit handler
   const submitHandler = async e => {
     e.preventDefault();
 
     try {
       setSignUpButton(true);
+
       await signUp(userInputState.enteredEmail, userInputState.enteredPassword);
+      console.log(currentUser.email);
+
+      // clear all input fields after successful sign up
+      dispatchInputFn({ type: "userName", value: "" });
+      dispatchInputFn({ type: "userEmail", value: "" });
+      dispatchInputFn({ type: "userPassword", value: "" });
+
+      history("/");
     } catch (error) {
       setSignUpButton(false);
       alert("failed to create an account" + error);
     }
-
-    setSignUpButton(false);
   };
 
   // name change handler

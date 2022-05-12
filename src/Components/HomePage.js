@@ -8,15 +8,17 @@ const Homepage = () => {
         <header className={styles.header}>
           <h1>CinnaBuns</h1>
 
-          <p className={styles["user-status"]}>
-            <NavLink to="/form">
-              <button className={styles["user-control"]}>SignUp</button>
-            </NavLink>
+          <div className={styles["user-status"]}>
+            <span className={styles["user-name"]}>Welcome, user</span>
 
-            <NavLink to="/login">
-              <button className={styles["user-control"]}>LogIn</button>
+            {/* <NavLink to="/form">
+              <button className={styles["user-control"]}>SignUp</button>
+            </NavLink> */}
+
+            <NavLink to="/sign-in">
+              <button className={styles["user-control"]}>LogOut</button>
             </NavLink>
-          </p>
+          </div>
         </header>
       </div>
     </>
