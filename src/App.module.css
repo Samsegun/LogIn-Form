@@ -181,6 +181,14 @@ label, button {
     transform: scale(1.05);
 }
 
+.forgot-sign {
+    text-align: center;
+}
+
+.mt {
+    margin-top: 2rem;
+}
+
 .update-profile {
     width: 80%;
     margin: 0 auto;

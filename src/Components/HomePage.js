@@ -24,7 +24,7 @@ const Homepage = () => {
 
           <div className={styles["user-status"]}>
             <span className={styles["user-name"]}>
-              {/* Welcome, {currentUser.email} */}
+              Welcome, {currentUser.email}
             </span>
 
             <button className={styles["user-control"]}>

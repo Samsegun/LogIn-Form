@@ -1,33 +1,24 @@
 import styles from "../App.module.css";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { useAuth } from "../Context/AuthContext";
 
 const ForgotPassword = () => {
+  const { resetPassword } = useAuth();
   const emailInputRef = useRef();
-  const passwordInputRef = useRef();
 
-  const submitHandler = e => {
+  const submitHandler = async e => {
     e.preventDefault();
 
-    console.log("gorgot");
+    try {
+      console.log(emailInputRef.current.value);
 
-    // try {
-    //   setSignUpButton(true);
+      await resetPassword(emailInputRef.current.value);
 
-    //   await logIn(inputState.enteredEmail, inputState.enteredPassword);
-
-    //   // if log in is successful, enable button
-    //   setSignUpButton(false);
-
-    //   // clear all input fields after successful sign up
-    //   dispatchInputFn({ type: "userEmail", value: "" });
-    //   dispatchInputFn({ type: "userPassword", value: "" });
-
-    //   history("/");
-    // } catch (error) {
-    //   setSignUpButton(false);
-    //   alert("failed to log in" + error.message);
-    // }
+      alert("password reset successful, please check your inbox!");
+    } catch (error) {
+      alert("failed to reset password" + error.message);
+    }
   };
 
   return (
@@ -46,24 +37,20 @@ const ForgotPassword = () => {
           />
         </div>
 
-        {/* password input field */}
-        <div className={styles["form-control"]}>
-          <label htmlFor="Password">Password</label>
-          <input
-            type="password"
-            id="Password"
-            placeholder="Enter Password"
-            ref={passwordInputRef}
-            // onChange={passwordInputHandler}
-            // value={inputState.enteredPassword}
-          />
+        <div className={styles.mt}>
+          <button className={styles.signUp}>Reset Password</button>
         </div>
 
         <div>
-          <p className={styles["forgot-password"]}> Don't have an account? </p>
-          <Link to="/sign-in">
-            <button className={styles.signIn}>Back to Sign-In</button>
-          </Link>
+          <p className={styles["forgot-password"]}>
+            <Link to="/Form">Don't have an account?</Link>{" "}
+          </p>
+
+          <p className={styles["forgot-sign"]}>
+            <Link to="/sign-in">
+              <button className={styles.signIn}>Back to Sign-In</button>
+            </Link>
+          </p>
         </div>
       </form>
     </div>

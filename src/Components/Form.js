@@ -96,7 +96,6 @@ const Form = () => {
       setSignUpButton(true);
 
       await signUp(userInputState.enteredEmail, userInputState.enteredPassword);
-      console.log(currentUser.email);
 
       // clear all input fields after successful sign up
       dispatchInputFn({ type: "userName", value: "" });
