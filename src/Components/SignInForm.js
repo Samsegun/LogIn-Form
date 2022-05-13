@@ -117,6 +117,12 @@ const SignInForm = () => {
         </div>
 
         <div>
+          <Link to="/forgot-password" className={styles["forgot-password"]}>
+            Forgot Password?
+          </Link>
+        </div>
+
+        <div>
           <p className={styles["signIn-text"]}>
             Don't have an account?{" "}
             <Link to="/Form">

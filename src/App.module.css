@@ -113,6 +113,20 @@ label, button {
     border: none;
 }
 
+.link {
+    font-size: 1rem;
+    border: 1px solid;
+     border-radius: 2rem;
+    text-align: center;
+    padding: 0.5rem 1rem;
+}
+
+.link:hover {
+    background: white;
+    color: rgb(184, 136, 52);
+    transition: all 300ms ease;
+}
+
 .signUp {
     width: 80%;
     margin: 0 auto;
@@ -139,6 +153,7 @@ label, button {
     width: 80%;
     margin: 1.5rem auto;
     font-size: 1.2rem;
+    text-align: center;
 }
 
 .signIn {
@@ -150,6 +165,36 @@ label, button {
     color: white;
     border-radius: 1rem;
     transition: all 300ms ease;
+}
+
+.forgot-password {
+    font-size: 1.5rem;
+    display: block;
+    text-align: center;
+    margin: 1rem;
+    color: rgb(252, 215, 215);
+    transition: all 300ms ease;
+}
+
+.forgot-password:hover {
+    color: rgb(255, 164, 164);
+    transform: scale(1.05);
+}
+
+.update-profile {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.update-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.update-header h2 {
+    color: white;
 }
 
 .hide {

@@ -9,9 +9,11 @@
 
 body {
   background: no-repeat linear-gradient(25deg, rgba(59,40,20,0.4) 100%, rgba(59,40,20,0.5) 100%), url(./assets/pexels-kira-schwarz-11031106.jpg) center/cover;
+  min-height: 100vh;
 }
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
