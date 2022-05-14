@@ -1,10 +1,18 @@
 import styles from "../App.module.css";
+import { useEffect, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Homepage = () => {
   const { currentUser, logOut } = useAuth();
+  const [userName, setUserName] = useState("");
   const history = useNavigate();
+
+  useEffect(() => {
+    console.log(currentUser.displayName);
+
+    setUserName(currentUser.displayName);
+  }, [currentUser.displayName]);
 
   const logOutHandler = async () => {
     try {
@@ -23,9 +31,7 @@ const Homepage = () => {
           <h1>CinnaBuns</h1>
 
           <div className={styles["user-status"]}>
-            <span className={styles["user-name"]}>
-              Welcome, {currentUser.email}
-            </span>
+            <span className={styles["user-name"]}>Welcome, {userName}</span>
 
             <button className={styles["user-control"]}>
               <Link to="/updateProfile">Update Profile</Link>

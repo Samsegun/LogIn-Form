@@ -1,13 +1,22 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../App.module.css";
 import { useAuth } from "../Context/AuthContext";
 
 const UpdateProfile = () => {
-  const { currentUser, updateMail, updatePasswrd } = useAuth();
+  const { currentUser, updateMail, updatePasswrd, updateUserProfile } =
+    useAuth();
+  //  const [userName, setUserName] = useState();
+  const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   // console.log("going to homepage....");
+  //   if(currentUser.displayName === userName) navigate("/");
+
+  // }, [userName, navigate, currentUser.displayName]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -22,9 +31,14 @@ const UpdateProfile = () => {
       promises.push(updatePasswrd(passwordInputRef.current.value));
     }
 
+    if (nameInputRef.current.value !== currentUser.displayName) {
+      promises.push(updateUserProfile(nameInputRef.current.value));
+    }
+
     Promise.all(promises)
       .then(() => {
-        console.log("update success");
+        console.log("update success " + currentUser.displayName);
+
         navigate("/");
       })
       .catch(() => {
@@ -39,7 +53,7 @@ const UpdateProfile = () => {
 
         <div className={styles["user-status"]}>
           <span className={styles["user-name"]}>
-            Welcome, {currentUser.email}
+            Welcome, {currentUser.displayName}
           </span>
 
           <Link to="/" className={styles.link}>
@@ -50,13 +64,25 @@ const UpdateProfile = () => {
 
       <div className={styles["form-wrapper"]}>
         <form className={styles["mobile-form"]} onSubmit={submitHandler}>
+          {/* name input field */}
+          <div className={styles["form-control"]}>
+            <label htmlFor="name">Change Name</label>
+            <input
+              type="name"
+              id="name"
+              placeholder="Enter New Name"
+              ref={nameInputRef}
+              defaultValue={currentUser.displayName}
+            />
+          </div>
+
           {/* email input field */}
           <div className={styles["form-control"]}>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Change Email</label>
             <input
               type="email"
               id="email"
-              placeholder="Enter Email"
+              placeholder="Enter New Email"
               ref={emailInputRef}
               defaultValue={currentUser.email}
             />

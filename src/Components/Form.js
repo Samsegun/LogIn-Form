@@ -55,7 +55,7 @@ const Form = () => {
     userInput
   );
   const [signUpButton, setSignUpButton] = useState(true);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   // refs
   const nameInputRef = useRef();
@@ -63,7 +63,7 @@ const Form = () => {
   const passwordInputRef = useRef();
 
   // firebase
-  const { signUp, currentUser } = useAuth();
+  const { signUp, currentUser, updateUserProfile } = useAuth();
 
   // check if input fields are valid
   useEffect(() => {
@@ -92,17 +92,47 @@ const Form = () => {
   const submitHandler = async e => {
     e.preventDefault();
 
-    try {
-      setSignUpButton(true);
+    setSignUpButton(true);
 
+    // signUp(userInputState.enteredEmail, userInputState.enteredPassword)
+    //   .then(() => {
+    //     // update user's profile name
+    //     updateUserProfile(userInputState.enteredName)
+    //       .then(() => {
+    //         console.log("profile updated");
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   })
+    //   .then(() => {
+    //     setSignUpButton(false);
+
+    //     // clear all input fields after successful sign up
+    //     dispatchInputFn({ type: "userName", value: "" });
+    //     dispatchInputFn({ type: "userEmail", value: "" });
+    //     dispatchInputFn({ type: "userPassword", value: "" });
+
+    //     navigate("/");
+    //   })
+    //   .catch(err => {
+    //     setSignUpButton(false);
+    //     alert("failed to create an account" + err);
+    //   });
+
+    try {
       await signUp(userInputState.enteredEmail, userInputState.enteredPassword);
+
+      await updateUserProfile(userInputState.enteredName);
+
+      console.log("profile updated");
 
       // clear all input fields after successful sign up
       dispatchInputFn({ type: "userName", value: "" });
       dispatchInputFn({ type: "userEmail", value: "" });
       dispatchInputFn({ type: "userPassword", value: "" });
 
-      history("/");
+      navigate("/");
     } catch (error) {
       setSignUpButton(false);
       alert("failed to create an account" + error);

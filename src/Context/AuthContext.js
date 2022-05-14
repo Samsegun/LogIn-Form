@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  updateProfile,
   updateEmail,
   updatePassword,
 } from "firebase/auth";
@@ -37,6 +38,13 @@ export const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
+  const updateUserProfile = userName => {
+    return updateProfile(auth.currentUser, {
+      displayName: userName,
+      photoUrl: "",
+    });
+  };
+
   const updateMail = email => {
     return updateEmail(currentUser, email);
   };
@@ -59,6 +67,7 @@ export const AuthProvider = ({ children }) => {
     logIn,
     logOut,
     resetPassword,
+    updateUserProfile,
     updateMail,
     updatePasswrd,
   };
